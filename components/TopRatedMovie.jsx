@@ -1,4 +1,4 @@
-import { Text, ScrollView, Image, useColorScheme } from "react-native";
+import { View, Text, ScrollView, Image, useColorScheme } from "react-native";
 import React from "react";
 import styled from "@emotion/native";
 import { DARK_COLOR, LIGHT_COLOR } from "../color";
@@ -7,7 +7,9 @@ const TopRatedMovie = () => {
   const isDark = useColorScheme();
   return (
     <>
-      <Text style={{ fontSize: 30, color: isDark ? DARK_COLOR : LIGHT_COLOR }}>Top Rated Movies</Text>
+      <View style={{margin: 20}}>
+        <Text style={{ fontSize: 30, color: isDark ? DARK_COLOR : LIGHT_COLOR }}>Top Rated Movies</Text>
+      </View>
       <ScrollView horizontal={true}>
         <Box>
           <Image
