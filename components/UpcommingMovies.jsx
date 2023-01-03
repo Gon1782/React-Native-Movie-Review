@@ -1,56 +1,50 @@
-import { View, Text, Image, useColorScheme } from "react-native";
+import { View, Text, Image, useColorScheme, TouchableOpacity } from "react-native";
 import React from "react";
 import styled from "@emotion/native";
-import { DARK_COLOR, LIGHT_COLOR } from "../color";
+import { useInfiniteQuery } from "react-query";
+import { getUpcommingMovies } from "../api/api";
 
 const UpcommingMovies = () => {
-  const isDark = useColorScheme();
+  const isDark = useColorScheme() === "dark";
+
+  const { isLoading, isError, data, error, fetchNextPage, hasNextPage } = useInfiniteQuery("Upcomming", getUpcommingMovies, {
+    getNextPageParam: (currentPage) => {
+      const nextPage = currentPage.page + 1;
+      return nextPage > currentPage.total_pages ? null : nextPage;
+    },
+  });
+
+  if (isLoading) return <Text>로딩중...</Text>;
+  if (isError) return <Text>에러: {error.message}</Text>;
+
+  const loadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage()
+    }
+  };
+
   return (
     <>
       <View style={{ margin: 20 }}>
-        <Text style={{ fontSize: 30, color: isDark ? DARK_COLOR : LIGHT_COLOR }}>Upcoming Movies</Text>
+        <Text style={{ fontSize: 30, color: `${isDark ? "white" : "black"}` }}>Upcoming Movies</Text>
       </View>
       <View>
-        <MovieBox>
-          <Image
-            style={{ width: 125, height: 175, margin: 10 }}
-            source={{ uri: "https://w.namu.la/s/fbe29c52a03345a112f33d89632e39735b30e9cd3d85346db314841d27e13f5148542ea262ae9fcd04c1a5c86c1a07586e381983ef8c4ce600ea9378fe4066a23539d5711b1de19b529aec370063c77763cf12fb3ae03383732ed2ca8571ab1f" }}
-          />
-          <View style={{ width: 250, marginRight: 10 }}>
-            <Text style={{ fontSize: 30, color: isDark ? DARK_COLOR : LIGHT_COLOR }}>제목</Text>
-            <Text style={{ fontSize: 20, color: isDark ? DARK_COLOR : LIGHT_COLOR }}>2023-01-03</Text>
-            <Text style={{ color: isDark ? DARK_COLOR : LIGHT_COLOR }} numberOfLines={3} ellipsizeMode="tail">
-              본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문
-            </Text>
-          </View>
-        </MovieBox>
-        <MovieBox>
-          <Image
-            style={{ width: 125, height: 175, margin: 10 }}
-            source={{ uri: "https://w.namu.la/s/fbe29c52a03345a112f33d89632e39735b30e9cd3d85346db314841d27e13f5148542ea262ae9fcd04c1a5c86c1a07586e381983ef8c4ce600ea9378fe4066a23539d5711b1de19b529aec370063c77763cf12fb3ae03383732ed2ca8571ab1f" }}
-          />
-          <View style={{ width: 250, marginRight: 10 }}>
-            <Text style={{ fontSize: 30, color: isDark ? DARK_COLOR : LIGHT_COLOR }}>제목</Text>
-            <Text style={{ fontSize: 20, color: isDark ? DARK_COLOR : LIGHT_COLOR }}>2023-01-03</Text>
-            <Text style={{ color: isDark ? DARK_COLOR : LIGHT_COLOR }} numberOfLines={3} ellipsizeMode="tail">
-              본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문
-            </Text>
-          </View>
-        </MovieBox>
-        <MovieBox>
-          <Image
-            style={{ width: 125, height: 175, margin: 10 }}
-            source={{ uri: "https://w.namu.la/s/fbe29c52a03345a112f33d89632e39735b30e9cd3d85346db314841d27e13f5148542ea262ae9fcd04c1a5c86c1a07586e381983ef8c4ce600ea9378fe4066a23539d5711b1de19b529aec370063c77763cf12fb3ae03383732ed2ca8571ab1f" }}
-          />
-          <View style={{ width: 250, marginRight: 10 }}>
-            <Text style={{ fontSize: 30, color: isDark ? DARK_COLOR : LIGHT_COLOR }}>제목</Text>
-            <Text style={{ fontSize: 20, color: isDark ? DARK_COLOR : LIGHT_COLOR }}>2023-01-03</Text>
-            <Text style={{ color: isDark ? DARK_COLOR : LIGHT_COLOR }} numberOfLines={3} ellipsizeMode="tail">
-              본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문본문
-            </Text>
-          </View>
-        </MovieBox>
+        {data.pages.map((movies) => {
+          return movies.results.map((movie) => (
+            <MovieBox key={movie.id}>
+              <Image style={{ width: 125, height: 175, margin: 10 }} source={{ uri: `https://image.tmdb.org/t/p/original${movie.poster_path}` }} />
+              <View style={{ width: 250, marginRight: 10 }}>
+                <Text style={{ fontSize: 30, color: `${isDark ? "white" : "black"}` }}>{movie.title}</Text>
+                <Text style={{ fontSize: 20, color: `${isDark ? "white" : "black"}` }}>{movie.release_date}</Text>
+                <Text style={{ color: `${isDark ? "white" : "black"}` }} numberOfLines={3} ellipsizeMode="tail">
+                  {movie.overview}
+                </Text>
+              </View>
+            </MovieBox>
+          ));
+        })}
       </View>
+      <TouchableOpacity onPress={loadMore}><Text>불러오기...</Text></TouchableOpacity>
     </>
   );
 };
