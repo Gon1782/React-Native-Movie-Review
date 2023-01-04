@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Movies from "../screen/Movies";
 import My from "../screen/My";
 import { useColorScheme } from "react-native";
-import { LIGHT_COLOR } from "../color";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
@@ -12,7 +11,7 @@ const Tabs = () => {
   const isDark = useColorScheme() === "dark";
   return (
     <Tab.Navigator 
-    sceneContainerStyle={{ backgroundColor: isDark ? LIGHT_COLOR : "white" }} 
+    sceneContainerStyle={{ backgroundColor: isDark ? "black" : "white" }} 
     screenOptions={{ headerTitleAlign: "center", tabBarLabelPosition: "beside-icon", tabBarActiveTintColor: isDark ? "red" : "skyblue" }}>
       <Tab.Screen
         options={{

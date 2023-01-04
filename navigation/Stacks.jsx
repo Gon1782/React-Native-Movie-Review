@@ -1,19 +1,27 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "../components/Home";
-import Notifications from "../components/Notifications";
-import Profile from "../components/Profile";
-import Settings from "../components/Settings";
+import { Text, TouchableOpacity, useColorScheme } from "react-native";
+import Detail from "../screen/Detail";
+import { useNavigation } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 
 const Stacks = () => {
+  const { goBack } = useNavigation();
+  const isDark = useColorScheme() === "dark";
+
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Notifications" component={Notifications} />
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="Settings" component={Settings} />
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleAlign: "center",
+        headerTintColor: isDark ? "white" : "black",
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => goBack()}>
+            <Text style={{ color: isDark ? "white" : "black" }}>뒤로</Text>
+          </TouchableOpacity>
+        ),
+      }}>
+      <Stack.Screen name="Detail" component={Detail} />
     </Stack.Navigator>
   );
 };

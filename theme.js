@@ -1,9 +1,9 @@
-import { DARK_COLOR, LIGHT_COLOR } from "./color";
-
 export const lightTheme = {
-  title: LIGHT_COLOR,
+  title: "#000000",
+  bgColor: "skyblue",
 };
 
 export const darkTheme = {
-  title: DARK_COLOR,
+  title: "#FFFFFF",
+  bgColor: "red",
 };

@@ -1,12 +1,11 @@
 import { View, Text, useColorScheme } from "react-native";
 import React from "react";
-import { DARK_COLOR, LIGHT_COLOR } from "../color";
 
 const My = () => {
-  const isDark = useColorScheme();
+  const isDark = useColorScheme() === "dark";
   return (
     <View>
-      <Text style={{ color: isDark ? DARK_COLOR : LIGHT_COLOR }}>My</Text>
+      <Text style={{ color: isDark ? "white" : "black" }}>My</Text>
     </View>
   );
 };
