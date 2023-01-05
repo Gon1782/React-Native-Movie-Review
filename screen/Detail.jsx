@@ -6,7 +6,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign } from "@expo/vector-icons";
 import { useQuery, useQueryClient } from "react-query";
 import { Loader, MovieInfo, Poster, StView } from "../components/Recommends";
-import { useState } from 'react';
+import { useState } from "react";
 
 const Detail = ({
   route: {
@@ -19,7 +19,7 @@ const Detail = ({
 
   const onRefresh = async () => {
     setRefreshing(true);
-    await queryClient.invalidateQueries("Detail")
+    await queryClient.invalidateQueries("Detail");
     setRefreshing(false);
   };
 
@@ -43,7 +43,7 @@ const Detail = ({
       <StView>
         <Image style={{ width: SCREEN_WIDTH, height: 300, position: "absolute" }} source={{ uri: `https://image.tmdb.org/t/p/w500${data.backdrop_path}` }} />
         <LinearGradient colors={["rgba(0,0,0,0.2)", "rgba(0,0,0,0.8)"]} style={{ width: "100%", height: 300, position: "absolute" }} />
-        <MovieInfo style={{alignItems:'center'}}>
+        <MovieInfo style={{ alignItems: "center" }}>
           <Poster source={{ uri: `https://image.tmdb.org/t/p/w500${data.poster_path}` }} />
           <View style={{ width: 240 }}>
             <Text style={{ color: "white", fontSize: 30 }}>{data.title}</Text>
@@ -51,7 +51,7 @@ const Detail = ({
         </MovieInfo>
       </StView>
       <View>
-        <Text style={{color: isDark ? "white" : "black", lineHeight: 20, padding: 20}}>{data.overview}</Text>
+        <Text style={{ color: isDark ? "white" : "black", lineHeight: 20, padding: 20 }}>{data.overview}</Text>
       </View>
       <YoutubeList>
         {data?.videos?.results.map((video) => (

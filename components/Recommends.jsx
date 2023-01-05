@@ -6,7 +6,7 @@ import Swiper from "react-native-web-swiper";
 import { useQuery } from "react-query";
 import { getPopularMovies } from "../api/api";
 import { useNavigation } from "@react-navigation/native";
-import { SCREEN_WIDTH } from '../util';
+import { SCREEN_WIDTH } from "../util";
 
 const Recommends = () => {
   const { navigate } = useNavigation();
@@ -62,11 +62,11 @@ export const StView = styled.View`
 `;
 
 export const Poster = styled.Image`
-  width: ${Math.round(SCREEN_WIDTH / 3) + 'px'};
-  height: 200px; 
+  width: ${Math.round(SCREEN_WIDTH / 3) + "px"};
+  height: 200px;
   margin-right: 10px;
   margin-left: 10px;
-`
+`;
 
 export const MovieInfo = styled.TouchableOpacity`
   flex-direction: row;

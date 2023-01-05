@@ -10,9 +10,7 @@ const Tab = createBottomTabNavigator();
 const Tabs = () => {
   const isDark = useColorScheme() === "dark";
   return (
-    <Tab.Navigator 
-    sceneContainerStyle={{ backgroundColor: isDark ? "black" : "white" }} 
-    screenOptions={{ headerTitleAlign: "center", tabBarLabelPosition: "beside-icon", tabBarActiveTintColor: isDark ? "red" : "skyblue" }}>
+    <Tab.Navigator sceneContainerStyle={{ backgroundColor: isDark ? "black" : "white" }} screenOptions={{ headerTitleAlign: "center", tabBarLabelPosition: "beside-icon", tabBarActiveTintColor: isDark ? "red" : "skyblue" }}>
       <Tab.Screen
         options={{
           title: "영화",

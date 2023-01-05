@@ -1,8 +1,8 @@
 import { View, Text, useColorScheme } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SCREEN_WIDTH } from "../util";
-import styled from '@emotion/native';
-import { Poster } from './Recommends';
+import styled from "@emotion/native";
+import { Poster } from "./Recommends";
 
 const UpcommingMoviesList = ({ movie }) => {
   const isDark = useColorScheme() === "dark";
